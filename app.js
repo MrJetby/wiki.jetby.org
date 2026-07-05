@@ -374,6 +374,25 @@ const markdownParser = window
     linkify: true,
     typographer: true,
     highlight: function (str, lang) {
+      if (lang && window.hljs?.getLanguage(lang)) {
+        try {
+          const highlighted = window.hljs.highlight(str, {
+            language: lang,
+          }).value;
+          return `<pre><code class="hljs language-${lang}">${highlighted}</code></pre>`;
+        } catch (error) {
+          // fall through to plain escape below
+        }
+      }
+      if (window.hljs) {
+        try {
+          const auto = window.hljs.highlightAuto(str);
+          const autoClass = auto.language ? ` language-${auto.language}` : "";
+          return `<pre><code class="hljs${autoClass}">${auto.value}</code></pre>`;
+        } catch (error) {
+          // fall through
+        }
+      }
       const escaped = escapeHtml(str);
       const languageClass = lang ? ` class="language-${lang}"` : "";
       return `<pre><code${languageClass}>${escaped}</code></pre>`;
@@ -444,7 +463,7 @@ function enhanceHtml(html) {
   result = addHeadingIds(result);
 
   result = result.replace(/<pre><code([^>]*)>/g, (_match, attrs) => {
-    const languageMatch = /class="language-([^\"]+)"/.exec(attrs || "");
+    const languageMatch = /\blanguage-([^\s"]+)/.exec(attrs || "");
     const language = languageMatch ? escapeHtml(languageMatch[1]) : "text";
     return `<div class="code-block"><div class="code-block-header"><span class="code-block-language">${language}</span><button class="code-copy-btn" type="button">Copy</button></div><pre><code${attrs}>`;
   });

@@ -409,10 +409,15 @@ body.lightbox-open {
   display: block;
   padding: 16px 10px;
   overflow-x: auto;
-  background: transparent;
+  background: transparent !important;
   color: #dce7ff;
   font-size: 0.95rem;
   line-height: 1.6;
+}
+
+.content-card pre code.hljs {
+  background: transparent !important;
+  padding: 16px 10px;
 }
 
 .code-block {
