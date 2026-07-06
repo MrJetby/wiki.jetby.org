@@ -1,3 +1,8 @@
+---
+name: Main Config
+priority: 999
+---
+
 # Main config
 
 ```yaml
@@ -13,17 +18,16 @@ storage:
 
 autobuy:
   enable: true
-  delay: 60  # In ticks. How often auto-sell triggers. Default 60 = 3 seconds
+  delay: 60 # In ticks. How often auto-sell triggers. Default 60 = 3 seconds
   actions:
-    - '[MESSAGE] <green>Auto-sell <gray>» <white>Sold items for <gold>$%sell_pay_commas% <gray>(<yellow>+%sell_score% points<gray>)'
-    - '[SOUND] entity_player_levelup;0.1'
+    - "[MESSAGE] <green>Auto-sell <gray>» <white>Sold items for <gold>$%sell_pay_commas% <gray>(<yellow>+%sell_score% points<gray>)"
+    - "[SOUND] entity_player_levelup;0.1"
   disabled-worlds:
     - duel-1
     - duel-2
   status:
     enable: "<#0DFB00><bold>Enabled"
     disable: "<#FB0000><bold>Disabled"
-
 
 score-system:
   # How the coefficient grows
@@ -46,9 +50,6 @@ score-system:
 
   booster:
     donat-1: # name (can be anything)
-      permission: 'buyer.boost.donat1' # permission used to check if the player has this boost
+      permission: "buyer.boost.donat1" # permission used to check if the player has this boost
       external-coefficient: 0.5
-
-
-
 ```

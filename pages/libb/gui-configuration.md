@@ -1,3 +1,8 @@
+---
+name: Gui configuration
+priority: 999
+---
+
 # Gui configuration
 
 ```java

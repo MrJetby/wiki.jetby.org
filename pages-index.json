@@ -1,0 +1,20 @@
+[
+  "WELCOME.md",
+  "libb/README.md",
+  "libb/actions.md",
+  "libb/developers/README.md",
+  "libb/developers/action-registry.md",
+  "libb/developers/advancedcommand/README.md",
+  "libb/developers/advancedcommand/sub-command-usage.md",
+  "libb/developers/gui/README.md",
+  "libb/developers/gui/advancedgui-example.md",
+  "libb/developers/gui/parsedgui-example.md",
+  "libb/gui-configuration.md",
+  "treexbuyer/README.md",
+  "treexbuyer/commands.md",
+  "treexbuyer/main-config.md",
+  "treexbuyer/menus.md",
+  "treexbuyer/placeholders.md",
+  "treexclans/README.md",
+  "treexclans/api.md"
+]

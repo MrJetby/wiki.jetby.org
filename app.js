@@ -12,7 +12,7 @@ const sidebarToggleEl = document.querySelector(".sidebar-toggle");
 const sidebarOverlayEl = document.getElementById("sidebar-overlay");
 const imageLightboxEl = document.getElementById("image-lightbox");
 const imageLightboxImageEl = document.getElementById("image-lightbox-image");
-const brandEl = document.querySelector(".brand");
+const brandEl = document.getElementById("brand-link");
 
 const BASE_PATH = (() => {
   const base = document.querySelector("base");
@@ -59,6 +59,7 @@ function parsePageMetadata(content) {
   const result = {
     icon: null,
     name: null,
+    priority: 0,
     hasContent: false,
     body: content.trim(),
   };
@@ -79,6 +80,12 @@ function parsePageMetadata(content) {
           }
           if (key === "name") {
             result.name = value;
+          }
+          if (key === "priority") {
+            const parsedPriority = Number.parseInt(value, 10);
+            result.priority = Number.isFinite(parsedPriority)
+              ? parsedPriority
+              : 0;
           }
         }
       });
@@ -194,7 +201,39 @@ function applyMetadata(node, metadata) {
   } else if (!node.title) {
     node.title = normalizeTitle(node.file);
   }
+  if (typeof metadata.priority === "number") {
+    node.priority = metadata.priority;
+  }
   node.hasContent = metadata.hasContent;
+}
+
+function compareNodes(a, b) {
+  const aPriority = Number.isFinite(a.priority) ? a.priority : 0;
+  const bPriority = Number.isFinite(b.priority) ? b.priority : 0;
+
+  if (aPriority !== bPriority) {
+    return bPriority - aPriority;
+  }
+
+  const aTitle = String(getNodeTitle(a)).toLowerCase();
+  const bTitle = String(getNodeTitle(b)).toLowerCase();
+  if (aTitle !== bTitle) {
+    return aTitle.localeCompare(bTitle);
+  }
+
+  const aKey = a.file || a.name || "";
+  const bKey = b.file || b.name || "";
+  return String(aKey).localeCompare(String(bKey));
+}
+
+function sortTree(node) {
+  if (!node || node.type !== "folder") {
+    return node;
+  }
+
+  node.children.forEach(sortTree);
+  node.children.sort(compareNodes);
+  return node;
 }
 
 function getNodeTitle(node) {
@@ -292,6 +331,7 @@ async function loadPageTree() {
   const files = await response.json();
   pageTree = buildTree(files);
   await loadPageMetadata();
+  sortTree(pageTree);
   pages = collectNavigablePages(pageTree);
   currentSlug = pages[0]?.slug ?? "";
 }
@@ -408,7 +448,7 @@ function transformMarkdown(markdown) {
   result = result.replace(
     /\{%\s*hint\s+style="([^"]+)"\s*%\}([\s\S]*?)\{%\s*endhint\s*%\}/g,
     (_match, style, content) => {
-      const innerHtml = renderMarkdownContent(content);
+      const innerHtml = markdownParser.render(transformMarkdown(content));
       return `<div class="callout callout-${style}">${innerHtml}</div>`;
     },
   );
@@ -433,7 +473,7 @@ function transformMarkdown(markdown) {
       const panels = panes
         .map(
           (pane, index) =>
-            `<div class="tab-panel${index === 0 ? " active" : ""}">${renderMarkdownContent(pane[2])}</div>`,
+            `<div class="tab-panel${index === 0 ? " active" : ""}">${markdownParser.render(transformMarkdown(pane[2]))}</div>`,
         )
         .join("");
 
@@ -443,7 +483,6 @@ function transformMarkdown(markdown) {
 
   return result;
 }
-
 function addHeadingIds(html) {
   return html.replace(
     /<h([1-4])(\s[^>]*)?>([\s\S]*?)<\/h\1>/g,
@@ -498,7 +537,7 @@ function renderMarkdown(markdown) {
 
 function getTitle(markdown) {
   const match = markdown.match(/^#\s+(.+)$/m);
-  return match ? match[1] : "Без названия";
+  return match ? match[1] : "Untitled";
 }
 
 function setActiveLink(slug) {
@@ -711,6 +750,9 @@ function toggleSidebar(force) {
       : !document.body.classList.contains("sidebar-open");
   document.body.classList.toggle("sidebar-open", shouldOpen);
   sidebarOverlayEl.classList.toggle("active", shouldOpen);
+  if (sidebarToggleEl) {
+    sidebarToggleEl.setAttribute("aria-expanded", String(shouldOpen));
+  }
 }
 
 function findPageBySlug(slug) {

@@ -1,3 +1,7 @@
+---
+name: ParsedGui example
+---
+
 # ParsedGui example
 
 `ParsedGui` lets you define an entire inventory GUI in a YAML config file — items, slots, click actions, open/close hooks, and placeholders — with no boilerplate code.

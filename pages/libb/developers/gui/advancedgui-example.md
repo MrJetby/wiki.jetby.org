@@ -1,3 +1,7 @@
+---
+name: AdvancedGui example
+---
+
 # AdvancedGui example
 
 Example gui

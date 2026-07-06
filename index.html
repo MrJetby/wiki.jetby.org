@@ -2,100 +2,156 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <base href="%BASE_PATH%" />
+    <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JetbyMC</title>
+    <title>JetbyMC Wiki</title>
     <meta
       name="description"
-      content="Современная вики с красивым интерфейсом и Markdown-страницами"
+      content="JetbyMC — современная wiki с поддержкой Markdown, красивым интерфейсом и удобной навигацией."
     />
+    <meta name="theme-color" content="#060910" />
+
+    <!-- Preconnect for fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Highlight.js theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="app-shell">
-      <aside class="sidebar">
-        <div class="brand">
-          <div>
-            <img
-              src="assets/icon.jpg"
-              alt="JetbyMC"
-              width="40"
-              height="40"
-              style="border-radius: 10%"
-            />
-          </div>
+      <!-- ── Sidebar ────────────────────────────── -->
+      <div
+        class="sidebar"
+        id="sidebar"
+        role="navigation"
+        aria-label="Sidebar navigation"
+      >
+        <a class="brand" id="brand-link" href="/" aria-label="Main — JetbyMC">
+          <img
+            src="assets/icon.jpg"
+            alt="JetbyMC логотип"
+            width="38"
+            height="38"
+          />
           <div>
             <h1>JetbyMC</h1>
           </div>
-        </div>
+        </a>
 
-        <label class="search-box" for="search">
-          <span>⌕</span>
-          <input id="search" type="search" placeholder="Поиск по разделам" />
+        <label class="search-box" for="search" aria-label="Поиск страниц">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            style="color: var(--text-3); flex-shrink: 0"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            id="search"
+            type="search"
+            placeholder="Search by category…"
+            autocomplete="off"
+            spellcheck="false"
+          />
         </label>
 
-        <nav id="page-list" class="page-list" aria-label="Страницы wiki"></nav>
-      </aside>
+        <nav id="page-list" class="page-list" aria-label="Список страниц"></nav>
+      </div>
 
-      <main class="main-content">
+      <!-- ── Main ──────────────────────────────── -->
+      <div class="main-content" id="main">
         <header class="topbar">
           <div class="topbar-left">
             <button
               class="sidebar-toggle"
               type="button"
+              id="sidebar-toggle"
               aria-label="Открыть меню"
+              aria-controls="sidebar"
+              aria-expanded="false"
             >
               <span></span>
               <span></span>
               <span></span>
             </button>
             <div>
-              <p class="eyebrow">Документация</p>
-              <h2 id="page-title">Загрузка…</h2>
+              <p class="eyebrow">Documentation</p>
+              <h2 id="page-title">Loading...</h2>
             </div>
           </div>
-          <div class="topbar-badge"></div>
+          <div class="topbar-badge" id="topbar-badge" aria-hidden="true"></div>
         </header>
 
         <nav
           id="breadcrumbs"
           class="breadcrumbs"
-          aria-label="Хлебные крошки"
+          aria-label="Breadcrumbs"
         ></nav>
-        <article id="content" class="content-card"></article>
+
+        <article
+          id="content"
+          class="content-card"
+          role="main"
+          aria-live="polite"
+        ></article>
+
         <nav
           id="doc-nav"
           class="doc-pagination"
-          aria-label="Навигация по странице"
+          aria-label="Page navigation"
         ></nav>
-      </main>
+      </div>
     </div>
 
-    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <!-- Sidebar overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebar-overlay" role="presentation"></div>
+
+    <!-- Image lightbox -->
     <div
       class="image-lightbox"
       id="image-lightbox"
       role="dialog"
-      aria-label="Просмотр изображения"
+      aria-modal="true"
+      aria-label="View image"
     >
-      <button class="image-lightbox-close" type="button" aria-label="Закрыть">
-        ×
+      <button class="image-lightbox-close" type="button" aria-label="Close">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
       </button>
       <img id="image-lightbox-image" src="" alt="" />
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/markdown-it-task-lists@2.1.0/dist/markdown-it-task-lists.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
-    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="app.js"></script>
   </body>
