@@ -7,12 +7,171 @@ priority: 998
 
 ## Actions
 
-<table><thead><tr><th width="259">Action</th><th width="271">Value</th><th width="261">Option</th><th></th></tr></thead><tbody><tr><td><strong>[MESSAGE]</strong></td><td>Send text</td><td></td><td></td></tr><tr><td><strong>[BROADCAST_MESSAGE]</strong></td><td>Send broadcast message</td><td></td><td></td></tr><tr><td><strong>[PLAYER]</strong></td><td>Execute command on behalf of the player</td><td></td><td></td></tr><tr><td><strong>[CONSOLE]</strong></td><td>Run command on behalf of Console</td><td></td><td></td></tr><tr><td><strong>[ACTIONBAR]</strong></td><td>Send text to actionbar</td><td></td><td></td></tr><tr><td><strong>[BROADCAST_ACTIONBAR]</strong></td><td>Send broadcast actionbar</td><td></td><td></td></tr><tr><td><strong>[SOUND]</strong></td><td>Play sound to player</td><td></td><td></td></tr><tr><td><strong>[BROADCAST_SOUND]</strong></td><td>Play sound for all players</td><td></td><td></td></tr><tr><td><strong>[EFFECT]</strong></td><td>Give effect to player</td><td>EFFECT;DURATION;STRENGTH</td><td></td></tr><tr><td><strong>[TITLE]</strong></td><td>Send text to title</td><td></td><td></td></tr><tr><td><strong>[BROADCAST_TITLE]</strong></td><td>Send broadcast title</td><td></td><td></td></tr><tr><td><strong>[OPEN_MENU]</strong></td><td>Open the menu for the player</td><td></td><td></td></tr><tr><td><strong>[AUTOBUY_ITEM_TOGGLE]</strong></td><td>Add/Remove items from the auto-buy list.</td><td></td><td></td></tr><tr><td><strong>[AUTOBUY_TOGGLE]</strong></td><td>Toggle auto-buy</td><td></td><td></td></tr><tr><td><strong>[ENABLE_ALL]</strong></td><td>Add all items to the auto-buy list in this category.</td><td>Works only on those items that have the command [AUTOBUY_ITEM_TOGGLE]</td><td></td></tr><tr><td><strong>[DISABLE_ALL]</strong></td><td>Remove all items from the auto-buy list in this category.</td><td>Works only on those items that have the command [AUTOBUY_ITEM_TOGGLE]</td><td></td></tr><tr><td><strong>[SELL_ITEM]</strong></td><td>Sell ​​an item with a certain quantity.</td><td>Examples:
-<br>Sell item: [SELL_ITEM] 1
-<br>Sell all: [SELL_ITEM] all</td><td></td></tr><tr><td><strong>[SELL_ALL]</strong></td><td>Sell ​​all items in slots where sell-zone: true is enabled</td><td></td><td></td></tr></tbody></table>
+<table>
+    <thead>
+        <tr>
+            <th width="259">Action</th>
+            <th width="271">Value</th>
+            <th width="261">Option</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>[MESSAGE]</strong></td>
+            <td>Send text</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[BROADCAST_MESSAGE]</strong></td>
+            <td>Send broadcast message</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[PLAYER]</strong></td>
+            <td>Execute command on behalf of the player</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[CONSOLE]</strong></td>
+            <td>Run command on behalf of Console</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[ACTIONBAR]</strong></td>
+            <td>Send text to actionbar</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[BROADCAST_ACTIONBAR]</strong></td>
+            <td>Send broadcast actionbar</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[SOUND]</strong></td>
+            <td>Play sound to player</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[BROADCAST_SOUND]</strong></td>
+            <td>Play sound for all players</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[EFFECT]</strong></td>
+            <td>Give effect to player</td>
+            <td>EFFECT;DURATION;STRENGTH</td>
+        </tr>
+        <tr>
+            <td><strong>[TITLE]</strong></td>
+            <td>Send text to title</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[BROADCAST_TITLE]</strong></td>
+            <td>Send broadcast title</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[OPEN_MENU]</strong></td>
+            <td>Open the menu for the player</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[AUTOBUY_ITEM_TOGGLE]</strong></td>
+            <td>Add/Remove items from the auto-buy list.</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[AUTOBUY_TOGGLE]</strong></td>
+            <td>Toggle auto-buy</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>[ENABLE_ALL]</strong></td>
+            <td>Add all items to the auto-buy list in this category.</td>
+            <td>Works only on those items that have the command [AUTOBUY_ITEM_TOGGLE]</td>
+        </tr>
+        <tr>
+            <td><strong>[DISABLE_ALL]</strong></td>
+            <td>Remove all items from the auto-buy list in this category.</td>
+            <td>Works only on those items that have the command [AUTOBUY_ITEM_TOGGLE]</td>
+        </tr>
+        <tr>
+            <td><strong>[SELL_ITEM]</strong></td>
+            <td>Sell an item with a certain quantity.</td>
+            <td>
+                Examples:<br>
+                Sell item: [SELL_ITEM] 1<br>
+                Sell all: [SELL_ITEM] all
+            </td>
+        </tr>
+        <tr>
+            <td><strong>[SELL_ALL]</strong></td>
+            <td>Sell all items in slots where <code>sell-zone: true</code> is enabled</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
 
 ---
 
 ## Placeholders
 
-<table><thead><tr><th width="285">Плейсхолдер</th><th>Функция</th></tr></thead><tbody><tr><td><strong>%price%</strong></td><td>Original price of the item (1000)</td></tr><tr><td><strong>%price_commas%</strong></td><td>Original price of the item (1,000)</td></tr><tr><td><strong>%coefficient%</strong></td><td>Current ratio</td></tr><tr><td><strong>%score%</strong></td><td>Scores (2500)</td></tr><tr><td><strong>%score_commas%</strong></td><td>Scores (2,500)</td></tr><tr><td><strong>%seller_pay%</strong></td><td>Prices from ​​all items in slots where sell-zone: true is enabled (25000)</td></tr><tr><td><strong>%seller_pay_commas%</strong></td><td>Prices from ​​all items in slots where sell-zone: true is enabled (25,000)</td></tr><tr><td><strong>%seller_score%</strong></td><td>Scores from ​​all items in slots where sell-zone: true is enabled (25000)</td></tr><tr><td><strong>%seller_score_commas%</strong></td><td>Scores from ​​all items in slots where sell-zone: true is enabled (25,000)</td></tr><tr><td><strong>%price_with_coefficient%</strong></td><td>Price with coefficient</td></tr><tr><td><strong>%autobuy_item_status%</strong></td><td>Status: is this item in auto-buy from the player</td></tr><tr><td><strong>%autobuy_status%</strong></td><td>Auto-buy status</td></tr></tbody></table>
+<table>
+    <thead>
+        <tr>
+            <th width="285">Placeholder</th>
+            <th>Function</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>%price%</strong></td>
+            <td>Original price of the item (1000)</td>
+        </tr>
+        <tr>
+            <td><strong>%price_commas%</strong></td>
+            <td>Original price of the item (1,000)</td>
+        </tr>
+        <tr>
+            <td><strong>%coefficient%</strong></td>
+            <td>Current ratio</td>
+        </tr>
+        <tr>
+            <td><strong>%score%</strong></td>
+            <td>Scores (2500)</td>
+        </tr>
+        <tr>
+            <td><strong>%score_commas%</strong></td>
+            <td>Scores (2,500)</td>
+        </tr>
+        <tr>
+            <td><strong>%seller_pay%</strong></td>
+            <td>Prices from all items in slots where <code>sell-zone: true</code> is enabled (25000)</td>
+        </tr>
+        <tr>
+            <td><strong>%seller_pay_commas%</strong></td>
+            <td>Prices from all items in slots where <code>sell-zone: true</code> is enabled (25,000)</td>
+        </tr>
+        <tr>
+            <td><strong>%seller_score%</strong></td>
+            <td>Scores from all items in slots where <code>sell-zone: true</code> is enabled (25000)</td>
+        </tr>
+        <tr>
+            <td><strong>%seller_score_commas%</strong></td>
+            <td>Scores from all items in slots where <code>sell-zone: true</code> is enabled (25,000)</td>
+        </tr>
+        <tr>
+            <td><strong>%price_with_coefficient%</strong></td>
+            <td>Price with coefficient</td>
+        </tr>
+        <tr>
+            <td><strong>%autobuy_item_status%</strong></td>
+            <td>Status: is this item in auto-buy for the player</td>
+        </tr>
+        <tr>
+            <td><strong>%autobuy_status%</strong></td>
+            <td>Auto-buy status</td>
+        </tr>
+    </tbody>
+</table>

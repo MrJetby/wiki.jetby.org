@@ -5,8 +5,7 @@ priority: 999
 
 # Gui configuration
 
-```java
-
+```yaml
 id: main # the unique gui name
 title: "&0&lExample"
 size: 54
@@ -14,20 +13,19 @@ size: 54
 command:
   - test
   - example
-  
+
 on_open:
-  - '[message] msg'
+  - "[message] msg"
   - example_check:
       if: "10 > 15"
       then:
-        - '[message] nice'
+        - "[message] nice"
       else:
-        - '[message] not nice'
+        - "[message] not nice"
 
 on_close: []
 
 Items:
-
   example:
     material: STONE
     amount: 1
@@ -42,15 +40,13 @@ Items:
       - "5 > 10"
     on_click:
       any:
-        - '[message] clicked'
+        - "[message] clicked"
         - example_check:
             if: "10 > 15"
             then:
-              - '[message] nice'
+              - "[message] nice"
             else:
-              - '[message] not nice'
+              - "[message] not nice"
       left:
-        - '[message] clicked left'
-
-
+        - "[message] clicked left"
 ```
