@@ -19,13 +19,15 @@ name: Libb
 ```java
 repositories {
     maven {
-        url "http://api.jetby.space/"
+        url "https://api.jetby.org/"
         name "jetby-repo"
     }
 }
+```
 
+```java
 dependencies {
-  compileOnly "me.jetby:Libb:VERSION"
+    compileOnly "org.jetby.libb:api:VERSION"
 }
 ```
 
@@ -36,14 +38,16 @@ dependencies {
 
 ```xml
 <repository>
-  <id>jetby-repo</id>
-  <url>http://api.jetby.space/</url>
+  <id>JetbyMC</id>
+  <url>https://api.jetby.org/</url>
 </repository>
+```
 
+```xml
 <dependency>
-  <groupId>me.jetby</groupId>
-  <artifactId>Libb</artifactId>
-  <version>VERSION</version>
+  <groupId>org.jetby.libb</groupId>
+  <artifactId>api</artifactId>
+  <version>1.2</version>
   <scope>provided</scope>
 </dependency>
 ```

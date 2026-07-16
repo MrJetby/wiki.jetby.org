@@ -1,4 +1,5 @@
 ---
-icon: <svg viewBox="0 0 576 512" fill="currentColor" class="gb-icon size-[1em] text-tint-subtle shrink-0" style="overflow: visible;"><path fill="currentColor" d="M337.1 16.9c3.9-12.7 17.4-19.7 30-15.8s19.7 17.4 15.8 30l-144 464c-3.9 12.7-17.4 19.7-30 15.8s-19.7-17.4-15.8-30l144-464zM145 135c9.4 9.4 9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L111 135c9.4-9.4 24.6-9.4 33.9 0zM431 135c9.4-9.4 24.6-9.4 33.9 0L569 239c9.4 9.4 9.4 24.6 0 33.9L465 377c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l87-87-87-87c-9.4-9.4-9.4-24.6 0-33.9z"></path></svg>
+icon: <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="64" height="64" viewBox="0 0 24 24" style="color: rgb(74, 85, 101); opacity: 1; transform: rotate(0deg);"><path fill="currentColor" d="m9.6 15.6l1.4-1.425L8.825 12L11 9.825L9.6 8.4L6 12zm4.8 0L18 12l-3.6-3.6L13 9.825L15.175 12L13 14.175zM5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21z"></path></svg>
 name: DEVELOPERS
+priority: 900
 ---

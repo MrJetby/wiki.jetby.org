@@ -121,6 +121,7 @@ function buildTree(files) {
             title: null,
             icon: null,
             hasContent: true,
+            folderNode: node,
           };
         } else {
           const slug = file.replace(/\.md$/i, "");
@@ -195,16 +196,28 @@ function collectNavigablePages(node, list = []) {
 function applyMetadata(node, metadata) {
   if (metadata.icon !== null) {
     node.icon = metadata.icon;
+    if (node.folderNode) {
+      node.folderNode.icon = metadata.icon;
+    }
   }
   if (metadata.name) {
     node.title = metadata.name;
+    if (node.folderNode) {
+      node.folderNode.title = metadata.name;
+    }
   } else if (!node.title) {
     node.title = normalizeTitle(node.file);
   }
   if (typeof metadata.priority === "number") {
     node.priority = metadata.priority;
+    if (node.folderNode) {
+      node.folderNode.priority = metadata.priority;
+    }
   }
   node.hasContent = metadata.hasContent;
+  if (node.folderNode) {
+    node.folderNode.hasContent = metadata.hasContent;
+  }
 }
 
 function compareNodes(a, b) {
@@ -259,7 +272,7 @@ function escapeHtml(value) {
 
 function renderIconMarkup(icon, alt) {
   if (!icon) {
-    return '<span class="category-bullet"></span>';
+    return '';
   }
 
   const trimmed = String(icon).trim();
@@ -365,7 +378,6 @@ function renderTree(node, filter = "") {
     return `
       <a class="page-link${node.slug === currentSlug ? " active" : ""}" href="${slugToPath(node.slug)}" data-slug="${node.slug}">
         <span>${escapeHtml(title)}</span>
-        <span class="page-meta">md</span>
       </a>
     `;
   }
@@ -413,6 +425,7 @@ const markdownParser = window
     html: true,
     linkify: true,
     typographer: true,
+    breaks: true,
     highlight: function (str, lang) {
       if (lang && window.hljs?.getLanguage(lang)) {
         try {
@@ -502,9 +515,7 @@ function enhanceHtml(html) {
   result = addHeadingIds(result);
 
   result = result.replace(/<pre><code([^>]*)>/g, (_match, attrs) => {
-    const languageMatch = /\blanguage-([^\s"]+)/.exec(attrs || "");
-    const language = languageMatch ? escapeHtml(languageMatch[1]) : "text";
-    return `<div class="code-block"><div class="code-block-header"><span class="code-block-language">${language}</span><button class="code-copy-btn" type="button">Copy</button></div><pre><code${attrs}>`;
+    return `<div class="code-block"><pre><code${attrs}>`;
   });
 
   result = result.replace(/<\/code><\/pre>/g, "</code></pre></div>");
@@ -740,6 +751,25 @@ function attachContentInteractions() {
       imageLightboxEl.classList.add("active");
       document.body.classList.add("lightbox-open");
     });
+
+    // Interactive parallax effect
+    image.addEventListener("mousemove", (e) => {
+      const rect = image.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const x = e.clientX - centerX;
+      const y = e.clientY - centerY;
+      
+      const rotateX = (y / rect.height) * 12;
+      const rotateY = -(x / rect.width) * 12;
+      const scale = 1.01;
+      
+      image.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+    });
+
+    image.addEventListener("mouseleave", () => {
+      image.style.transform = "perspective(1200px) rotateX(0) rotateY(0) scale(1)";
+    });
   });
 }
 
@@ -791,6 +821,7 @@ async function loadPage(slug, anchor = "") {
 
   titleEl.textContent = metadata.name || getTitle(markdown);
   contentEl.innerHTML = renderMarkdown(metadata.body || markdown);
+  addCodeCopyButtons();
   enhanceInternalLinks(page);
   enhanceContentImages(page);
   renderBreadcrumbs(page);
@@ -808,6 +839,43 @@ async function loadPage(slug, anchor = "") {
       }
     }
     window.scrollTo(0, 0);
+  });
+}
+
+function addCodeCopyButtons() {
+  contentEl.querySelectorAll('.code-block').forEach((block) => {
+    if (block.dataset.copyAttached) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'code-copy-btn';
+    btn.setAttribute('aria-label', 'Copy code');
+    btn.textContent = 'Copy';
+    block.appendChild(btn);
+
+    btn.addEventListener('click', async () => {
+      const codeEl = block.querySelector('pre code');
+      if (!codeEl) return;
+      const text = codeEl.innerText;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        btn.classList.add('copied');
+        btn.textContent = 'Copied';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 1500);
+      } catch (err) {
+        console.error('Copy failed', err);
+      }
+    });
+
+    block.dataset.copyAttached = '1';
   });
 }
 
